@@ -30,7 +30,7 @@ Dans les composants, remplacer le template Html par : ``templateUrl: './app.comp
 
 ### -> Créer une interface
 
-```Typescript
+``` Typescript
 //Exemple d'interface et de classe
 export interface IMyObject {
   id: number;
@@ -64,7 +64,47 @@ A la fin : comparer avec le routing de l'application appTest ...
 
 ### -> Ajoutez la communication HTTP à votre application
 
-Au lieu d'utiliser JSON Server : une petite API en C# ? 😉
+**Au lieu d'utiliser JSON Server : une petite API en C# ?** 😉
 
+1. Créer une Api Asp.Net MVC Core (.Net 8 pour avoir Swagger)
+2. Utiliser CoPilot pour convertir en C# le code Typescript du tableau *housingLocationList: HousingLocationType[]* 
+3. Créer un contrôleur d'Api avec actions de lecture/ecriture : *LocationsController*
 
+``` Csharp
+public class LocationsController : ControllerBase
+{
+    // GET: api/Locations
+    [HttpGet]
+    public IEnumerable<HousingLocation> Get()
+    {
+        return HousingLocationService.HousingLocationList;
+    }
 
+    // GET api/Locations/5
+    [HttpGet("{id}")]
+    public HousingLocation? Get(int id)
+    {
+        return HousingLocationService.HousingLocationList.Find(item => item.Id == id);
+    }
+}
+```
+
+4. Terminer le tutoriel, en appellant l'Api dans le service Angular :
+
+``` Typescript
+export class HousingService {
+  private url = 'https://localhost:7117/api/Locations'; 
+
+  public async getAllHousingLocations(): Promise<HousingLocationType[]> {
+    const data = await fetch(this.url);
+    return (await data.json()) ?? [];
+  }
+
+  public async getHousingLocationById( id: number ): Promise<HousingLocationType | undefined> {
+    const datum = await fetch(`${this.url}/${id}`);
+    return (await datum.json()) ?? {};
+  }
+  ...
+```
+
+<!-- ## Implémenter l'authentification Azure  -->
