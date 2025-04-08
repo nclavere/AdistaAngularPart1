@@ -1,6 +1,5 @@
 # Adista Angular #1
-Formation de démarrage sur Angular pour débutants
-
+Formation de démarrage sur Angular pour débutants - Partie 1
 
 ## Install des outils
 
@@ -107,4 +106,7 @@ export class HousingService {
   ...
 ```
 
-<!-- ## Implémenter l'authentification Azure  -->
+## Implémenter l'authentification Azure
+
+Suite : [Adista Angular #2](https://github.com/nclavere/AdistaAngularPart2)
+
